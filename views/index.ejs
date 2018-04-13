@@ -1,0 +1,18 @@
+<%-include header %>
+    
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+	<% if ( typeof(users) == "undefined" | users == null) { %>
+ 	<div>
+ 		<a href="/users/login">登录</a>
+ 		<a href="/users/regis">注册</a>
+ 	</div>
+ 	<% } else { %>
+    <div>
+    	<p>欢迎你 <%= users.name %></p>
+    	<a href="/users">用户中心</a>
+    </div>
+    <% } %>
+
+<%-include header %>
+ 

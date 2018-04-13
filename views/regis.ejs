@@ -1,0 +1,74 @@
+<%-include header %>
+    
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <p style="color: red;" id="registext"></p>
+    <style>
+    	.login {
+    		width: 30%;
+    	}
+    </style>
+ 	<section class="login">
+ 		<form onsubmit="return false">
+		  <div class="form-group">
+		    <label for="exampleInputEmail1">昵称</label>
+		    <input type="text" class="form-control" id="exampleInputname" placeholder="昵称" name="name">
+		  </div>
+		  <div class="form-group">
+		    <label for="exampleInputEmail1">邮箱</label>
+		    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="邮箱" name="email">
+		  </div>
+		  <div class="form-group">
+		    <label for="exampleInputPassword1">密码</label>
+		    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="密码" name="password">
+		  </div>
+		  
+		  <!-- <div class="checkbox">
+		    <label>
+		      <input type="checkbox"> 
+		    </label>
+		  </div> -->
+		  <button type="submit" class="btn btn-danger" style="width: 100%;" id="regis">注册</button>
+		  <a href="/users/login">登录</a>
+		</form>
+
+ 	</section>
+	<script>
+		var json = {};
+		var mdata = {}
+		$("form").submit(function(){
+			$(this).find('input').each(function(index,ele){
+				json[$(ele).attr('name')] = $(ele).val();
+			})
+			if(json.name == "" | json.email == "" | json.password == "") {
+				alert('信息不完整')
+				return;
+			}
+			mdata['users'] = json
+			console.log(json)
+			$.ajax({
+				url: '/users/regis',
+				type:'post',
+				data: mdata,
+				beforeSend: function () {
+					$("#regis").text('注册中....')
+				},
+				success: function (data) {
+					console.log(data)
+					if(data.success){
+						
+						 window.location.href = window.location.origin+'/users/login';
+						
+					}else {
+						$("#registext").text(data.text)
+						$("#regis").text('注册')
+					}
+				},
+				error: function (error) {
+					console.log(error)
+				}
+			})
+		})
+	</script>
+
+<%-include footer %>

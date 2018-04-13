@@ -2,4 +2,4 @@
 
 ## 效果图
 
-![demo](/image/demo.git)
+![demo](/image/demo.gif)

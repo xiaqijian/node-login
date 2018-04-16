@@ -2,9 +2,37 @@
     
     <h1><%= title %></h1>
     <p>Welcome to <%= name %></p>
+    <p>注册时间 <%= newdate %></p>
     <a href="/users/loginout">退出</a>
     <a href="/">去首页</a>
- 
+    <section>
+    	<h6>用户登录日志</h6>
+    	<table class="table table-bordered table-striped">
+	      <thead>
+	        <tr>
+	          <th>#</th>
+	          <th>用户名称</th>
+	          <th>时间</th>
+	          <th>地区</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	      	<% arrdata.forEach(function(item,index){ %>
+	        <tr>
+	          <th scope="row"><%= index+1 %></th>
+	          <td><%= item.email %></td>
+	          <td><%= item.date %></td>
+	          <td>@mdo</td>
+	        </tr>
+	        <% }) %>
+	        
+	      </tbody>
+	    </table>
+    </section>
+ <script>
+ console.log(moment().format())
+ </script>
+
 
 <%-include header %>
  

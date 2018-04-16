@@ -3,7 +3,8 @@ const Schema = mongodb.Schema;
 const RegisSchema = new Schema({
 	name: String,
 	email: String,
-	password: String
+	password: String,
+	date: { type: Date, default: Date.now }
 })
 
 const Regis = mongodb.model("users", RegisSchema);
@@ -27,6 +28,14 @@ RegisDAO.prototype.findUser = function (email) {
 			}else {
 				reject(err)
 			}
+		})
+	})
+}
+RegisDAO.prototype.find = function () {
+	return new Promise((resolve, reject) => {
+		Regis.find({},{_id:0,password:0,__v:0 },(err, doc) => {
+			resolve(doc);
+			reject(err)
 		})
 	})
 }

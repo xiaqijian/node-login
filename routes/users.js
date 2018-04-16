@@ -1,10 +1,19 @@
 var express = require('express');
 var router = express.Router();
 var RegisDO = require('../models/regis.js')
+var moment = require("moment");
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   var name = req.session.users.name
-  res.render('users', { title:'用户中心', name: name })
+  var date = req.session.users.date;
+  var newdate = moment(date).format('YYYY-MM-DD HH:mm:ss');
+  RegisDO.find().then((data) => {
+    var arrdata = changeDate(data)
+  	res.render('users', { title:'用户中心', name ,newdate,arrdata})
+  }, (err) => {
+    res.render('users', { title:'用户中心', name ,newdate,arrdata})
+  })
+  
 });
 
 router.get('/loginout', function(req, res, next) {
@@ -30,7 +39,8 @@ router.post('/login', function(req, res, next){
 			if(password === psw) {
 				// console.log('密码相等');
 				req.session.users = {
-					name: value.name
+					name: value.name,
+					date: value.date
 				}
 			    res.send({ success: true, text: '登录成功' })
 
@@ -74,5 +84,17 @@ router.post('/regis', function(req, res, next){
 	
 	
 })
+
+function changeDate ( data ) {
+	var arr = JSON.parse( JSON.stringify(data) );
+	for (item in arr) {
+		// console.log(item)
+		arr[item].date = moment(item.date).format('YYYY-MM-DD HH:mm:ss');
+		console.log(arr[item].date);
+	}
+	// console.log(333333)
+	// console.log(arr)
+	return arr
+}
 
 module.exports = router;

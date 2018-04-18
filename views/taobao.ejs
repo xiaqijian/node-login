@@ -1,0 +1,90 @@
+<%-include header %>
+    
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <style>
+        .boxcol {
+        	overflow: hidden;
+        }
+    	.boxcol-2 {
+    		float: left;
+    		width: 20%;
+    		margin-right: 10px;
+    	}
+    </style>
+	<section>	
+		<form onsubmit="return false">
+			  <div class="form-group">
+			    <label for="title">标题：</label>
+			    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="标题" name="title">
+			  </div>
+			  <div class="form-group ">
+			    <label for="imgUrl">图片地址：</label>
+			    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="图片地址" name="imgUrl">
+			  </div>
+			  <div>
+			    <select id="category" name="category">
+			    	<option value="front">前端</option>
+			    	<option value="node">Node</option>
+			    	<option value="javascript">JavaScript</option>
+			    </select>
+			  </div>
+			  <div class="boxcol">
+			  	<div class="form-group boxcol-2">
+				    <label for="oldPrice">原价：</label>
+				    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="原价" name="oldPrice">
+				  </div>
+				   <div class="form-group boxcol-2">
+				    <label for="newPrice">折后价：</label>
+				    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="折后价" name="newPrice">
+				  </div>
+				  <div class="form-group boxcol-2">
+				    <label for="coupon">优惠劵：</label>
+				    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="优惠劵" name="coupon">
+				  </div>
+			  </div>
+			  
+			  <div class="form-group">
+			    <label for="shopCode">商品口令：</label>
+			    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="商品口令" name="shopCode">
+			  </div>
+			  <div class="form-group">
+			    <label for="couponCode">优惠劵口令：</label>
+			    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="优惠劵口令" name="couponCode">
+			  </div>
+			  
+			  
+			  
+			  <button type="submit" class="btn btn-danger">Submit</button>
+			</form>
+	</section>
+
+	<script> 
+		var json = {};
+		var mdata = {};
+		$("form").submit(function () {
+			$(this).find('input').each(function (index, ele) {
+				json[$(ele).attr('name')] = $(ele).val()
+			})
+			var category = $("#category").val()
+			console.log(category)
+			json['category'] = category;
+			console.log(json)
+			mdata['taobao'] = json;
+			$.ajax({
+				url: '/taobao',
+				type: 'post',
+				datatype:'json',
+				data: mdata,
+				success: function (data) {
+					console.log(data)
+				},
+				error: function (err) {
+					console.log(err)
+				}
+			})
+		})
+	</script>
+
+<%-include header %>
+ 

@@ -4,7 +4,7 @@ const RegisSchema = new Schema({
 	name: String,
 	email: String,
 	password: String,
-	date: { type: Date, default: Date.now }
+	date: { type: Date, default: ISODate() }
 })
 
 const Regis = mongodb.model("users", RegisSchema);
